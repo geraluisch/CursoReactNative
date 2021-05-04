@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
+/*
 export default class MovieCard extends Component {
   constructor(props) {
     super(props)
@@ -92,17 +93,7 @@ export default class MovieCard extends Component {
           onError={() => this.setState({ validImage: false })}
           onLoadEnd={() => this.setState({ isLoading: false })}
           onLongPress={this.toggleFullscreen}
-        />
-        {/* <Image
-          style={styles.image}
-          source={
-            validImage
-              ? { uri: posterurl }
-              : require('../../assets/no_image_available.jpg')
-          }
-          onError={() => this.setState({ validImage: false })}
-          onLoadEnd={() => this.setState({ isLoading: false })}
-        /> */}
+        />        
         <View style={styles.likeRating}>
           <Rating heart like={like} onRatingPress={this.toggleLike} />
         </View>
@@ -125,3 +116,61 @@ export default class MovieCard extends Component {
     );
   }
 }
+*/
+
+const MovieCard = ({navigation, posterurl, title, year, imdbRating, actors, description, genres}) =>{
+
+  const [isLoading, updateIsLoading]    = useState(true);
+  const [validImage, updateValidImage]  = useState(true);
+  const [starRating, updateStarRating]  = useState(1);
+  const [like, updateLike] = useState(false);
+  const [showFullscreenImage, updateShowFullscreenImage] = useState(false);
+
+  const starRatingChange = starPosition => updateStarRating(starPosition)
+
+  const toggleLike = () => updateLike(( like ) => (!like));
+
+  const toggleFullscreen = () => updateShowFullscreenImage(( showFullscreenImage ) => ( !showFullscreenImage ));
+
+  //const toggleDetails = () => 'FullMovie';
+
+  return (
+    <View style={styles.container}>
+      { isLoading && <ActivityIndicator color="red" size="large" />}
+      { showFullscreenImage
+        && validImage
+        && <MovieFullscreenImage onPress={toggleFullscreen} source={{ uri: posterurl }} />
+      }
+      <MovieCardImage
+        validImage={validImage}
+        posterurl={posterurl}
+        actors={actors}
+        description={description}
+        onError={() => updateValidImage(false)}
+        onLoadEnd={() => updateIsLoading(false)}
+        onLongPress={toggleFullscreen}   
+      />        
+      <View style={styles.likeRating}>
+        <Rating heart like={like} onRatingPress={toggleLike} />
+      </View>
+      <Text style={[styles.title, styles.textColor]}>{title}</Text>
+      <View style={styles.subtitle}>
+        <Text style={[styles.description, styles.textColor]}>{year}</Text>
+        <Rating
+          star
+          starRating={starRating}
+          onRatingPress={starRatingChange}
+        />
+        <Text style={[styles.description, styles.textColor, styles.bigFont]}>
+          {imdbRating}
+        </Text>
+      </View>
+      <MovieDescription description={description} />
+      <GenreList genres={genres} />
+      <ActorsList actors={actors} />        
+    </View>
+  );
+
+}
+
+export default MovieCard;

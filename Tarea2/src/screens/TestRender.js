@@ -25,8 +25,7 @@ export default class TestRender extends PureComponent {
 
   render() {
     const { numero } = this.state;
-    console.log('render')
-    return (
+      return (
       <>
         <Text style={{ fontSize: 20, textAlign: 'center' }}>{numero}</Text>
         <Button

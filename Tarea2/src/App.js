@@ -12,8 +12,9 @@ import {
   StatusBar,
   StyleSheet,
 } from 'react-native';
-import Home from './screens/Home';
-import movies from './lib/movies.json'
+//import Home from './screens/Home';
+//import movies from './lib/movies.json'
+import RootNavigation from './routes/Root';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,10 +24,13 @@ const styles = StyleSheet.create({
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <>
+    {/* <SafeAreaView style={styles.container}> */}
       <StatusBar barStyle={'dark-content'} />
-      <Home movies={movies} />
-    </SafeAreaView>
+      {/* <Home movies={movies} /> */}
+      <RootNavigation/>
+    {/* </SafeAreaView> */}
+    </>
   );
 };
 

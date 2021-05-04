@@ -1,7 +1,10 @@
-import React, { PureComponent } from 'react';
-import { Button, Text } from 'react-native';
+import React from 'react';
 import Header from '../components/Header';
 import MoviesList from '../components/Movies/MoviesList';
+import {
+  SafeAreaView,
+  StyleSheet,
+} from 'react-native';
 
 // export default class Home extends PureComponent {
 //   render() {
@@ -15,11 +18,22 @@ import MoviesList from '../components/Movies/MoviesList';
 //   }
 // }
 
-const Home = ({ movies = [] }) => (
-  <>
-    <Header title="La Cartelera" />
-    <MoviesList movies={movies} />
-  </>
-);
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#34495e',
+  },
+});
+
+const Home = ({ /*movies = []*/ route }) => {
+
+  const { movies } = route.params;
+
+  return(
+    <SafeAreaView style={styles.container}>
+      <Header title="La Cartelera" />
+      <MoviesList movies={movies} />
+    </SafeAreaView> 
+  )
+};
 
 export default Home;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableHighlight, Image, StyleSheet } from 'react-native';
+import {useNavigation} from '@react-navigation/core';
 
 const styles = StyleSheet.create({
   image: {
@@ -11,17 +12,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const MovieCardImage = ({
+const MovieCardImage = ({ 
   validImage,
   posterurl,
+  actors,
+  description,
   onError = () => { },
   onLoadEnd = () => { },
-  onLongPress = () => { },
+  onLongPress = () => { }, 
 }) => {
+
+  const navigation = useNavigation();
   // puede ir código
   return (
     <TouchableHighlight
       onLongPress={onLongPress}
+      onPress={() => navigation.navigate('FullMovie',
+        { posterurl,
+          actors,
+          description,
+          validImage 
+        }
+      )}
       underlayColor="transparent"
     >
       <Image

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ActorsList = ({ actors }) => {
+const ActorsList = ({ actors, styleView }) => {
   Icon.loadFont();
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
