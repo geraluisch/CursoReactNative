@@ -16,8 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const chipStyle = (withColor, color) => {  
-  color = withColor ? color : colors.gray;
+const chipStyle = (color) => {   
  
   return {
     padding: 5,
@@ -35,24 +34,12 @@ const textStyle = (color) => {
   }
 }
 
-const rankColor = (rankVelue) => { 
-  switch (rankVelue) {
-    case 1:
-    case 2: return  colors.yellowGold;
-    case 3:
-    case 4: return  colors.copper;
-    default: return  colors.gray;     
-  }
-}
-
-
-
-const Chip = ({ value, rank, color, pressable, textColor = 'black' }) => {
+const Chip = ({ value, color = colors.gray, pressable, textColor = 'black' }) => {
   
   return(
   <TouchableOpacity
     disabled={!pressable}
-    style={chipStyle(color,rankColor(rank))} 
+    style={chipStyle(color)} 
     //onPress={() => onPress(value)}
   >
     <Text style={textStyle(textColor)}>{value}</Text>

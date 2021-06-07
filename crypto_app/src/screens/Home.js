@@ -18,11 +18,9 @@ import Header from '../components/Header';
 import Input from '../components/Input';
 import OverlaySpinner from 'react-native-loading-spinner-overlay';
 import colors from '../config/colors';
-// import { color } from 'react-native-reanimated';
 import axios from 'axios';
+import { CryptoCurrencyContext } from '../contexts/CryptoCurrencyHandler';
 import { getLastCurrencies } from '../config/constants';
-
-const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container : {
@@ -43,33 +41,35 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: 10,
     },
-    currencyContainer: {
-        //justifyContent: 'space-between',
-        //alignItems: 'center',
+    currencyContainer: {       
         marginVertical: 10,
     },
     scrollView: {
-        flex: 1,
-        // backgroundColor: 'pink',
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        flex: 1,  
       },
 });
+
+const { height } = Dimensions.get('window');
 
 // const wait = (timeout) => {
 //     return new Promise(resolve => setTimeout(resolve, timeout));
 // }
-
-
-
 
 const Home = () => {
     const [currencies, setCurrencies] = useState([]);
     const [searchCurrency, setSearchCurrency] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const navigation = useNavigation();
-  //const {states, isLoading, fetchDataByCurrency} = useContext(CountryContext);
-  useEffect(() => { LogBox.ignoreLogs(['VirtualizedLists should never be nested']); }, []);
+
+    console.log('aca');
+    const { //states, 
+            // isLoading, 
+            fetchDataByCurrency 
+    } = useContext(CryptoCurrencyContext);
+
+    //console.log('aca 2-------------------', states);
+    
+    useEffect(() => { LogBox.ignoreLogs(['VirtualizedLists should never be nested']); }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -131,8 +131,8 @@ const Home = () => {
                     color={colors.white}
                     textContent="Cargando información..."
                     textStyle={styles.overlayStyle}
-                    visible={false}
-                /> */}
+                    visible={isLoading}
+                />  */}
                     <Header/>             
                     <View style={{backgroundColor:'white'}}>
                         <Input                   
@@ -153,7 +153,7 @@ const Home = () => {
                         style={{ backgroundColor: '#eee' }}
                         data={searchCurrency}                      
                         keyExtractor={({ slug }) => slug}
-                        renderItem={({ item: {id, name, symbol, slug, quote },index }) => {                            
+                        renderItem={({ item: {id, name, symbol, slug, quote, cmc_rank },index }) => {                            
                             const style = index % 2 === 0 ? { backgroundColor: '#fff' } : null;
                             const {
                                 USD : {
@@ -172,8 +172,8 @@ const Home = () => {
                                 flexDirection: 'row',
                                 justifyContent:'space-between' 
                                 }}
-                                onPress={() => {
-                                    //fetchDataByCountry(Country, Slug);
+                                onPress={() => {                                    
+                                    fetchDataByCurrency(id, name, slug, cmc_rank, quote);                                    
                                     navigation.navigate('CurrencyInfo');
                                 }}
                             >

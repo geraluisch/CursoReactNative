@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
         padding: 10,
-      },
+    },
     loginButtonText: {
         fontSize: 20,
         marginRight: 5,
         color: colors.white,
-      },
+    },
   });
 
 const Login = ({isLoadingActive, loginIn, valid}) => {

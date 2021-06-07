@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import RootNavigation from './routes/Root';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import CryptoCurrencyHandler from './context/CryptoCurrenciesHandler';
+import CryptoCurrencyHandler from './contexts/CryptoCurrencyHandler';
 
 const App = () => { 
   return (
