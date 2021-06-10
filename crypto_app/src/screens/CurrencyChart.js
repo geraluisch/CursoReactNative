@@ -20,12 +20,6 @@ import {
   } from "react-native-chart-kit";
 import colors from '../config/colors';
 import Header from '../components/Header';
-import Chip from '../components/Chip';
-import TagList from '../components/CurrencyInfo/TagList';
-import { useNavigation } from '@react-navigation/core';
-import { CryptoCurrencyContext } from '../contexts/CryptoCurrencyHandler';
-import OverlaySpinner from 'react-native-loading-spinner-overlay';
-import SimpleIcon from 'react-native-vector-icons/Octicons';
 
 const styles = StyleSheet.create({
     container : {
@@ -105,65 +99,54 @@ const styles = StyleSheet.create({
 });
 
 
-const CurrencyChart = ({navigation}) => {
-    // const {
-    //     states,
-    //     isLoading,
-    // } = useContext(CryptoCurrencyContext);
+const CurrencyChart = ({
+    navigation,  
+    route: {
+        params: {
+            labels,
+            data,
+            valores,
+        },
+  },
+}) => {  
 
-    // const {  
-    //     id,
-    //     name,
-    //     slug,
-    //     rank,
-    //     quote,
-    //     logo,
-    //     symbol,
-    //     description,
-    //     tags,
-    //     urls,
-    // }  = states;
-
-
-
-
+    const {
+        price,
+        volume_24h,
+        percent_change_1h,
+        percent_change_24h,
+        percent_change_7d,
+        percent_change_30d,
+        percent_change_60d,
+        percent_change_90d,
+        market_cap,
+    } = valores;
+   
     return (
         <SafeAreaView style={ styles.container }>           
             <Header/>         
-                 <ScrollView style={ styles.scrollView }>
-
+            <ScrollView style={ styles.scrollView }>
                 <View style={{ padding:10 }}>
-                    <Text>Gráfico de </Text>
+                    <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Gráfico Precios vs Tiempo</Text>
                     <LineChart
                         data={{
-                        labels: ["January", "February", "March", "April", "May", "June"],
+                        labels: labels.reverse(),
                         datasets: [
                             {
-                            data: [
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100,
-                                Math.random() * 100
-                            ]
+                                data: data.reverse()                              
                             }
                         ]
                         }}
-                        width={Dimensions.get("window").width - 20} // from react-native
+                        width={Dimensions.get("window").width - 20} 
                         height={250}
                         yAxisLabel="$"
                         yAxisSuffix="k"
-                        yAxisInterval={1} // optional, defaults to 1
+                        yAxisInterval={1} 
                         chartConfig={{
                         backgroundColor: "#e26a00",
                         backgroundGradientFrom: 'red',//"#fb8c00",
                         backgroundGradientTo: "#ffa726",
-                        decimalPlaces: 2, // optional, defaults to 2dp
+                        decimalPlaces: 2, 
                         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                         style: {
@@ -181,7 +164,43 @@ const CurrencyChart = ({navigation}) => {
                         borderRadius: 16
                         }}
                     />
+                </View>    
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Precio Actual</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>$ { price }</Text>
+                </View>  
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Volumen en 24h</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>$ { volume_24h }</Text>
                 </View>               
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 1h</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>{ percent_change_1h }</Text>
+                </View>               
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 24h</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>{ percent_change_24h }</Text>
+                </View>               
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 7d</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>{ percent_change_7d }</Text>
+                </View>               
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 30d</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>{ percent_change_30d }</Text>
+                </View>      
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 60d</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>{ percent_change_60d }</Text>
+                </View>      
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 90d</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>{ percent_change_90d }</Text>
+                </View>      
+                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Market Cap</Text>
+                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                    <Text style={styles.description}>$ { market_cap }</Text>
+                </View>    
             </ScrollView>
             <View>
                 <TouchableOpacity style={{ backgroundColor: colors.doge, flexDirection:'column', alignContent:'center', alignItems:'center', height:40 }} onPress={() => navigation.pop()}>

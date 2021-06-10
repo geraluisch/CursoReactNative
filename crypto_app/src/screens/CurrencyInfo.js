@@ -106,6 +106,8 @@ const styles = StyleSheet.create({
 //     }
 // }
 
+
+
 const valueColor = (percent_change) => {
     
     let color = percent_change >= 0 ? 'green' : 'red';   
@@ -124,9 +126,14 @@ const rankColor = (rankVelue) => {
   }
 
 const CurrencyInfo = ({navigation}) => {
+
+    // let chartLabels = [];
+    // let chartData   = [];
+
     const {
         states,
-        isLoading,
+        isLoadingData,
+        isLoadingDataLFow,
     } = useContext(CryptoCurrencyContext);
 
     const {  
@@ -139,8 +146,14 @@ const CurrencyInfo = ({navigation}) => {
         symbol,
         description,
         tags,
-        urls,
+        urls,       
+        chartLabels,
+        chartData,
     }  = states;
+
+    const updateData = () => {
+        
+    }
 
     // console.log('quoteeeeeee:   ',quote);
 
@@ -175,7 +188,7 @@ const CurrencyInfo = ({navigation}) => {
         <SafeAreaView style={ styles.container }>           
             <Header/>         
             {  
-                isLoading   ?
+                isLoadingData || isLoadingDataLFow   ?
                 (
                     <OverlaySpinner
                         color={colors.white}
@@ -217,16 +230,20 @@ const CurrencyInfo = ({navigation}) => {
                                     
                                     <View style={{ flex: 1, flexDirection:'row', alignContent:'center', alignItems:'center' }}>
                                     <TouchableOpacity
-                                            onPress={() => navigation.navigate('CurrencyChart')
+                                            onPress={() => {                                                   
+                                                    navigation.navigate('CurrencyChart', {
+                                                        labels : chartLabels,
+                                                        data: chartData,
+                                                        valores: quote.USD,
+                                                    })
+                                                }
                                             }
-                                            style={styles.graphButton}>
-                                            {/* <Text style={styles.graphButtonText}>Grafico</Text>                    */}
+                                            style={styles.graphButton}>                                        
                                             <SimpleIcon name='graph' color={ colors.white } size={ 20 } />
                                     </TouchableOpacity> 
                                       
                                     </View>
-                                </View>
-                                        
+                                </View>                                        
                                 <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Descripción</Text>
                                 <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
                                     <Text style={styles.description}>{ description }</Text>

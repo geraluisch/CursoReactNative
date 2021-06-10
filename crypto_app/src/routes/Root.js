@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import LoginNavigator from './LoginStack';
 import HomeNavigator from './HomeStack';
+import DrawerNavigator from './MenuStack';
 
 const RootStack = createStackNavigator();
 
@@ -13,7 +14,8 @@ const RootNavigation = ({isValidLogin}) => (
             {!isValidLogin ? (
                 <RootStack.Screen name="LoginNavigator" component={LoginNavigator}/>                
             ) : (
-                <RootStack.Screen name="HomaNavigator" component={HomeNavigator}/>
+                //<RootStack.Screen name="HomaNavigator" component={HomeNavigator}/>
+                <RootStack.Screen name="MenuLateral" component={DrawerNavigator}/>
             )}
         </RootStack.Navigator>
     </NavigationContainer>

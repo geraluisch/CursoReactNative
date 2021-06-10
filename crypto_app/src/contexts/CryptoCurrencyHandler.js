@@ -1,6 +1,8 @@
 import React, { useState, createContext, useReducer } from 'react';
 import axios from 'axios';
-import { getCurrencyInfo } from '../config/constants';
+import { getCurrencyInfo, getCurrencyFlow } from '../config/constants';
+import { meses } from '../config/constants';
+// import { max } from 'react-native-reanimated';
 
 export const CryptoCurrencyContext = createContext();
 
@@ -21,7 +23,12 @@ const cryptoCurrencyReducer = (state, action) => {
                 ...state,
                 ...action.currencyData,
             };          
-        
+        case 'ADD_CURRENCY_FLOW':
+            return {
+                ...state,
+                chartLabels: action.chartLabels,
+                chartData: action.chartData,
+            }
         case 'CLEAN_DATA':
             return {
                 ...state,
@@ -30,6 +37,8 @@ const cryptoCurrencyReducer = (state, action) => {
                 description: null,
                 tags: [],
                 urls: null,
+                chartLabels: [],
+                chartData: [],
             };
         default:
             return state;
@@ -47,14 +56,17 @@ const defaultState = {
    description: null,
    tags: [],
    urls: null,
+   chartLabels: [],
+   chartData: [],
 };
 
 const CryptoCurrencyHandler = ({ children }) => {
     const [states, dispatch] = useReducer(cryptoCurrencyReducer, defaultState);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingData, setIsLoadingData] = useState(false);
+    const [isLoadingDataFlow, setIsLoadingDataFlow] = useState(false);
 
     const fetchDataByCurrency = async (currencyId, currencyName, currencySlug, currencyRank, currencyQuote) => {
-        setIsLoading(true);
+        setIsLoadingData(true);      
 
         dispatch({
             type: 'CLEAN_DATA',
@@ -95,28 +107,65 @@ const CryptoCurrencyHandler = ({ children }) => {
                 dispatch({
                     type: 'ADD_CURRENCY_DATA',
                     currencyData,
-                });             
-
-                console.log('quote2--------',currencyQuote);
-                console.log('currencyData--------',currencyData);
-
-
-                setIsLoading(false);
-                return;
+                });                
             }
         
-            setIsLoading(false);
+            setIsLoadingData(false);          
+            return;
         } catch (error) {
             console.log('Error: ', error );
-            setIsLoading(false);
+            setIsLoadingData(false);
+        }       
+    };
+
+    const fetchDataByCurrencyFlow = async (currencySymbol) => {
+        setIsLoadingDataFlow(true);          
+
+        try {
+            const { data, status } = await axios.get(
+                getCurrencyFlow(currencySymbol),
+            );
+            
+            if( status === 200) {           
+                
+               const flow = data['Time Series (Digital Currency Monthly)'];
+
+                let dateFlow = [];
+                let dataFlow = [];
+                let mes = [];
+                let maxData = 0;
+
+                for(let date in flow) {
+                    if(maxData >= 5) 
+                        break;
+                    maxData += 1;
+                    mes = date.split('-',3);
+                    dateFlow.push(meses[mes[1]]);
+                    dataFlow.push(parseFloat(flow[date]['4b. close (USD)']))
+                }                 
+
+                dispatch({
+                    type: 'ADD_CURRENCY_FLOW',
+                    chartLabels: dateFlow,
+                    chartData: dataFlow,
+                });                
+            }
+        
+            setIsLoadingDataFlow(false);            
+            return;
+        } catch (error) {
+            console.log('Error: ', error );
+            setIsLoadingDataFlow(false);
         }       
     };
     
     return (
         <CryptoCurrencyContext.Provider
             value={{
-                isLoading,
+                isLoadingData,
+                isLoadingDataFlow,
                 fetchDataByCurrency,
+                fetchDataByCurrencyFlow,
                 states,
             }}>           
             { children }

@@ -60,14 +60,11 @@ const Home = () => {
     const [searchCurrency, setSearchCurrency] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const navigation = useNavigation();
-
-    console.log('aca');
-    const { //states, 
-            // isLoading, 
-            fetchDataByCurrency 
-    } = useContext(CryptoCurrencyContext);
-
-    //console.log('aca 2-------------------', states);
+  
+    const {  
+            fetchDataByCurrency,
+            fetchDataByCurrencyFlow, 
+    } = useContext(CryptoCurrencyContext);   
     
     useEffect(() => { LogBox.ignoreLogs(['VirtualizedLists should never be nested']); }, []);
 
@@ -173,7 +170,8 @@ const Home = () => {
                                 justifyContent:'space-between' 
                                 }}
                                 onPress={() => {                                    
-                                    fetchDataByCurrency(id, name, slug, cmc_rank, quote);                                    
+                                    fetchDataByCurrency(id, name, slug, cmc_rank, quote);  
+                                    fetchDataByCurrencyFlow(symbol);                                  
                                     navigation.navigate('CurrencyInfo');
                                 }}
                             >

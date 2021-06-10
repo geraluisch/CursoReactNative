@@ -13,25 +13,24 @@ import colors from '../config/colors';
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.doge,
-        height: 40,
+        height: 50,
         flexDirection: 'row',
         justifyContent:'space-between'
     },
     touchableOpacity: {
-       paddingRight:5
+       paddingLeft: 4,
     },
     viewTitle: {        
-        //flexDirection:'row',
         flex:1,
         justifyContent:'center',
         alignItems:'center',
     },
     title: {
         color: colors.gold,
-        fontSize: 23,
+        fontSize: 20,
         fontWeight: 'bold',
-        paddingBottom: 6,
-        paddingLeft:24
+        paddingBottom: 2,
+        paddingRight: 14,
     }
 });
 
@@ -43,12 +42,12 @@ class Header extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <View style={styles.viewTitle}>
-                    <Text style={styles.title}>Crypto App</Text>
-                </View>
                 <TouchableOpacity style={styles.touchableOpacity}>
                     <MaterialIcon name="menu" color={colors.gold} size={40}/>
                 </TouchableOpacity>
+                <View style={styles.viewTitle}>
+                    <Text style={styles.title}>CRYPTO APP</Text>
+                </View>                
             </SafeAreaView>
         );
     }
