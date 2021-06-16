@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     },
     touchableOpacity: {
        paddingLeft: 4,
+       paddingTop:5,
     },
     viewTitle: {        
         flex:1,
@@ -42,7 +43,7 @@ class Header extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <TouchableOpacity style={styles.touchableOpacity}>
+                <TouchableOpacity style={styles.touchableOpacity} onPress={()=> this.props.navigation.openDrawer()} >
                     <MaterialIcon name="menu" color={colors.gold} size={40}/>
                 </TouchableOpacity>
                 <View style={styles.viewTitle}>

@@ -67,43 +67,27 @@ const styles = StyleSheet.create({
   });
 
 
-const MenuContent = (props)  => {
-
-    const { navigation, route } = props;
-
-    //const paperTheme = useTheme();
-
-    //const { signOut, toggleTheme } = React.useContext(AuthContext);
+const MenuContent = ({navigation,  userName, userMail, userPhone, userPhoto, logout })  => {
 
     return(
         <View style={{flex:1}}>
-            {/* <DrawerContentScrollView {...props}> */}
-            <DrawerContentScrollView >
+            <DrawerContentScrollView>           
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
-                                source={{
-                                    uri: 'https://api.adorable.io/avatars/50/abott@adorable.png'
-                                }}
+                                // source={{
+                                //     uri: 'https://api.adorable.io/avatars/50/abott@adorable.png'
+                                // }}
+                                source={userPhoto !== '' ?  { uri: userPhoto } :   require('../../assets/profile.jpg')}
                                 size={50}
                             />
                             <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>John Doe</Title>
-                                <Caption style={styles.caption}>@j_doe</Caption>
+                                <Title style={styles.title}>{userName}</Title>
+                                <Caption style={styles.caption}>{userMail}</Caption>
                             </View>
                         </View>
 
-                        {/* <View style={styles.row}>
-                            <View style={styles.section}>
-                                <Paragraph style={[styles.paragraph, styles.caption]}>80</Paragraph>
-                                <Caption style={styles.caption}>Following</Caption>
-                            </View>
-                            <View style={styles.section}>
-                                <Paragraph style={[styles.paragraph, styles.caption]}>100</Paragraph>
-                                <Caption style={styles.caption}>Followers</Caption>
-                            </View>
-                        </View> */}
                     </View>
 
                     <Drawer.Section title="Menú" style={styles.drawerSection}>
@@ -116,8 +100,7 @@ const MenuContent = (props)  => {
                                 />
                             )}
                             label="Home"
-                            onPress={() => {
-                                console.log('probando',navigation);
+                            onPress={() => {                                
                                 navigation.navigate('Home', { screen: 'Home' })}}
                         />
                         <DrawerItem 
@@ -133,7 +116,7 @@ const MenuContent = (props)  => {
                         />      
                     </Drawer.Section>                   
                 </View>
-            </DrawerContentScrollView>
+            </DrawerContentScrollView> 
             <Drawer.Section style={styles.bottomDrawerSection}>
                 <DrawerItem 
                     icon={({color, size}) => (
@@ -143,8 +126,8 @@ const MenuContent = (props)  => {
                         size={size}
                         />
                     )}
-                    label="Logout"
-                    //onPress={() => {signOut()}}
+                    label="Log Out"
+                    onPress={() => logout()}
                 />
             </Drawer.Section>
         </View>
@@ -152,3 +135,4 @@ const MenuContent = (props)  => {
 }
 
 export default MenuContent;
+

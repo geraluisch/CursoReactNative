@@ -51,34 +51,35 @@ const styles = StyleSheet.create({
 
 const { height } = Dimensions.get('window');
 
-// const wait = (timeout) => {
-//     return new Promise(resolve => setTimeout(resolve, timeout));
-// }
-
 const Home = () => {
     const [currencies, setCurrencies] = useState([]);
     const [searchCurrency, setSearchCurrency] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigation();
   
     const {  
             fetchDataByCurrency,
-            fetchDataByCurrencyFlow, 
+            fetchDataByCurrencyFlow,           
     } = useContext(CryptoCurrencyContext);   
     
     useEffect(() => { LogBox.ignoreLogs(['VirtualizedLists should never be nested']); }, []);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        // //wait(2000).then(() => setRefreshing(false));
         fetchCurrencies(true);
     }, []);
 
     const fetchCurrencies = async (refresh) => {
+        setIsLoading(true);
+
         const { data, status } = await axios.get(
             getLastCurrencies,
         )
-        .catch(error => console.log(error));    
+        .catch(error => {
+            console.log(error);
+            setIsLoading(false);        
+        });    
 
         if(status === 200) {
             showMessage({
@@ -91,6 +92,8 @@ const Home = () => {
 
             setRefreshing(false);           
         }   
+
+        setIsLoading(false);
     };
     
     const filterCurrencies = useCallback(
@@ -124,17 +127,17 @@ const Home = () => {
                         />
                     }
                 >
-                {/* <OverlaySpinner
-                    color={colors.white}
-                    textContent="Cargando información..."
-                    textStyle={styles.overlayStyle}
-                    visible={isLoading}
-                />  */}
-                    <Header/>             
+                    <OverlaySpinner
+                        color={colors.white}
+                        textContent="Cargando información..."
+                        textStyle={styles.overlayStyle}
+                        visible={isLoading}
+                    /> 
+                    <Header navigation={navigation}/>             
                     <View style={{backgroundColor:'white'}}>
                         <Input                   
                             placeholder="Buscar cripto-moneda..." 
-                            placeholderTextColor={colors.white} 
+                            placeholderTextColor={colors.gray} 
                             onChangeText={ filterCurrencies }              
                         />
                     </View> 

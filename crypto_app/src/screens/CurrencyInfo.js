@@ -13,7 +13,7 @@ import colors from '../config/colors';
 import Header from '../components/Header';
 import Chip from '../components/Chip';
 import TagList from '../components/CurrencyInfo/TagList';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-/core';
 import { CryptoCurrencyContext } from '../contexts/CryptoCurrencyHandler';
 import OverlaySpinner from 'react-native-loading-spinner-overlay';
 import SimpleIcon from 'react-native-vector-icons/Octicons';
@@ -154,34 +154,6 @@ const CurrencyInfo = ({navigation}) => {
     const updateData = () => {
         
     }
-
-    // console.log('quoteeeeeee:   ',quote);
-
-    // const {
-    //     USD : {
-    //         price,
-    //         volume_24h,
-    //         percent_change_1h,
-    //     }
-    // } = quote;
-
-    // const up_down = percent_change_1h >= 0 ? '▲' : '▼';
-   
-    // console.log(percent_change_1h);
-
-    // const genresChip = moviesGenres.map((genre, index) => (
-    //     <Chip
-    //       pressable
-    //       onPress={onPress}
-    //       key={`genres-${index}`} value={genre}
-    //     />
-    // ));
-
-    // const name = 'Ethereum';
-    // const rank = 2;
-    // const symbol = 'ETH';
-    //const price = 10000;
-    //const percent_change_1h = 100;
 
 
     return (

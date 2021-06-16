@@ -1,5 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const cryotoAppAsyncStorageUser = 'cryptoAppUserName';
+const cryotoAppAsyncStorageKey = 'cryptoAppProfile';
+
 export const login = ({user, password}) => {
     return dispatch => {
         dispatch({
@@ -31,4 +34,21 @@ export const logout = () => {
         type: 'LOGOUT',
     }
 };
+
+export const profile = ({nombre, correo, telefono, filePath}) => {
+    return dispatch => {
+        dispatch({
+            type: 'SAVE_PROFILE',
+            nombre: nombre,
+            correo: correo,
+            telefono: telefono,
+            filePath: filePath,
+        });
+        AsyncStorage.setItem('nombre',nombre);
+        AsyncStorage.setItem(cryotoAppAsyncStorageKey,JSON.stringify({nombre: nombre, correo: correo, telefono: telefono, filePath: filePath,}));
+        
+    };
+};
+
+
 
