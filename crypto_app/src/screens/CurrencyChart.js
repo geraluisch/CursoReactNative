@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import {
     SafeAreaView,
     Text,
@@ -24,78 +24,47 @@ import Header from '../components/Header';
 const styles = StyleSheet.create({
     container : {
         flex: 1,       
-    },
-    overlayStyle: {
-        color: colors.white,
-    },   
-    textHeader: {
-        fontWeight: 'bold',
-        paddingBottom: 10,
-    },
-    currencyContainer: {        
-        marginVertical: 10,
-    },
+    },     
     scrollView: {
         flex: 1,
         backgroundColor: colors.lightGray,        
     },
-    headerInfo: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'red',
-    },
-    imageContainer: {       
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor: colors.lightGray, 
-        height: 80, 
-        width: 80 ,
-    },
-    image: {        
-        width: 64,
-        height: 64,           
-    },
+    titleGraph: {
+        paddingLeft:10, 
+        paddingTop:10, 
+        fontSize:18, 
+        fontWeight:'bold'
+    }, 
     titleText:{
-        flex: 1,       
-        backgroundColor: 'white', 
-        flexDirection: 'column',
-        alignItems: 'center',
-        //flexWrap: 'wrap',
-        //paddingLeft: 10,
-        
+        paddingLeft:10, 
+        paddingTop:10, 
+        fontSize:18, 
+        fontWeight:'bold'             
     },
-    priceText:{
-        flex: 1.5,
-        alignItems: 'center',
-        backgroundColor: 'white',
-        paddingTop: 6, 
-        paddingRight: 10
-    },
-    bodyInfo: {
-        flex: 1,
-    },
-    graphButton: {
-        margin: 5,
-        backgroundColor: colors.gold,
-        //flexDirection: 'row',
-        borderRadius: 2,
-        alignItems: 'center',
-        justifyContent:  'center',
-        //alignContent: 'center',
-        flex: 1,
-        height:60
-        //padding: 50,
-    },
-    graphButtonText: {
-        fontSize: 20,
-        marginRight: 10,
-        color: colors.white,
-    },
+    infoContent:{
+        margin: 10, 
+        backgroundColor: "white", 
+        borderRadius:8, 
+        marginBottom:10, 
+    },   
     description:{
         textAlign:'justify',
         fontSize:15,
         margin:10,
-    },  
+    },
+    backButton: {
+        backgroundColor: colors.doge, 
+        flexDirection:'column', 
+        alignContent:'center', 
+        alignItems:'center', 
+        height:40
+    },
+    textButton: {
+        color: colors.gold, 
+        fontSize:20, 
+        fontWeight:'bold', 
+        paddingTop:6 
+    }  
 });
 
 
@@ -124,10 +93,10 @@ const CurrencyChart = ({
    
     return (
         <SafeAreaView style={ styles.container }>           
-            <Header/>         
+            <Header navigation={navigation}/>         
             <ScrollView style={ styles.scrollView }>
                 <View style={{ padding:10 }}>
-                    <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Gráfico Precios vs Tiempo</Text>
+                    <Text style={ styles.titleGraph }>Gráfico Precios vs Tiempo</Text>
                     <LineChart
                         data={{
                         labels: labels.reverse(),
@@ -165,46 +134,46 @@ const CurrencyChart = ({
                         }}
                     />
                 </View>    
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Precio Actual</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Precio Actual</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>$ { price }</Text>
                 </View>  
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Volumen en 24h</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Volumen en 24h</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>$ { volume_24h }</Text>
                 </View>               
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 1h</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Porcentaje de Cambio en 1h</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>{ percent_change_1h }</Text>
                 </View>               
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 24h</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Porcentaje de Cambio en 24h</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>{ percent_change_24h }</Text>
                 </View>               
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 7d</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Porcentaje de Cambio en 7d</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>{ percent_change_7d }</Text>
                 </View>               
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 30d</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Porcentaje de Cambio en 30d</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>{ percent_change_30d }</Text>
                 </View>      
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 60d</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Porcentaje de Cambio en 60d</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>{ percent_change_60d }</Text>
                 </View>      
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Porcentaje de Cambio en 90d</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Porcentaje de Cambio en 90d</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>{ percent_change_90d }</Text>
                 </View>      
-                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Market Cap</Text>
-                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                <Text style={ styles.titleText }>Market Cap</Text>
+                <View  style={styles.infoContent}>
                     <Text style={styles.description}>$ { market_cap }</Text>
                 </View>    
             </ScrollView>
             <View>
-                <TouchableOpacity style={{ backgroundColor: colors.doge, flexDirection:'column', alignContent:'center', alignItems:'center', height:40 }} onPress={() => navigation.pop()}>
-                    <Text style={{ color: colors.gold, fontSize:20, fontWeight:'bold',  paddingTop:6   }}>Volver atrás</Text>
+                <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
+                    <Text style={ styles.textButton }>Volver atrás</Text>
                 </TouchableOpacity>
             </View>  
         </SafeAreaView>        

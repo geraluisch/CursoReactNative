@@ -46,8 +46,7 @@ const styles = StyleSheet.create({
   },
   infoContent: {
       flex: 1,
-      backgroundColor: colors.lightGray,     
-      //alignItems: 'center',       
+      backgroundColor: colors.lightGray,          
   }, 
   infoContainer: {         
       alignItems: 'center',       

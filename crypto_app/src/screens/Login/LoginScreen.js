@@ -17,8 +17,7 @@ import OverlaySpinner from 'react-native-loading-spinner-overlay';
 
 const styles = StyleSheet.create({
     safeAreaView: {
-        flex:1,
-        // backgroundColor: 'black'
+        flex:1,     
     },  
     container: {
         flex:1, 

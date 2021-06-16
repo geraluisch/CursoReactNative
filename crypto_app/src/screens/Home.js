@@ -43,10 +43,21 @@ const styles = StyleSheet.create({
     },
     currencyContainer: {       
         marginVertical: 10,
+    },    
+    textSlug: {
+        fontSize: 12, 
+        minWidth:90
     },
-    scrollView: {
-        flex: 1,  
-      },
+    textPrice:{
+        fontSize: 12, 
+        minWidth:80,
+        textAlign:'right',
+    },
+    textMarketCap: {
+        fontSize: 12, 
+        minWidth:120,
+        textAlign:'right'
+    }
 });
 
 const { height } = Dimensions.get('window');
@@ -59,8 +70,8 @@ const Home = () => {
     const navigation = useNavigation();
   
     const {  
-            fetchDataByCurrency,
-            fetchDataByCurrencyFlow,           
+        fetchDataByCurrency,
+        fetchDataByCurrencyFlow,           
     } = useContext(CryptoCurrencyContext);   
     
     useEffect(() => { LogBox.ignoreLogs(['VirtualizedLists should never be nested']); }, []);
@@ -70,7 +81,7 @@ const Home = () => {
         fetchCurrencies(true);
     }, []);
 
-    const fetchCurrencies = async (refresh) => {
+    const fetchCurrencies = async () => {
         setIsLoading(true);
 
         const { data, status } = await axios.get(
@@ -118,8 +129,7 @@ const Home = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View>
-                <ScrollView 
-                    style={{ backgroundColor:'blue' }}                
+                <ScrollView                                   
                     refreshControl={
                         <RefreshControl
                             refreshing={ refreshing }
@@ -178,9 +188,9 @@ const Home = () => {
                                     navigation.navigate('CurrencyInfo');
                                 }}
                             >
-                                <Text style={{ fontSize: 12, minWidth:90 }}>{ slug }</Text>
-                                <Text style={{ fontSize: 12, minWidth:80,textAlign:'right'}}>$ { price.toFixed(2)  }</Text>
-                                <Text style={{ fontSize: 12, minWidth:120,textAlign:'right'}}>$ { market_cap.toFixed(2)  }</Text>                                                          
+                                <Text style={ styles.textSlug }>{ slug }</Text>
+                                <Text style={ styles.textPrice }>$ { price.toFixed(2)  }</Text>
+                                <Text style={ styles.textMarketCap }>$ { market_cap.toFixed(2)  }</Text>    
                             </TouchableOpacity>
                             );
                         }}

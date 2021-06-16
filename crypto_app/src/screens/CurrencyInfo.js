@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     overlayStyle: {
         color: colors.white,
     },   
-    textHeader: {
-        fontWeight: 'bold',
-        paddingBottom: 10,
-    },
-    currencyContainer: {        
-        marginVertical: 10,
-    },
+    // textHeader: {
+    //     fontWeight: 'bold',
+    //     paddingBottom: 10,
+    // },
+    // currencyContainer: {        
+    //     marginVertical: 10,
+    // },
     scrollView: {
         flex: 1,
         backgroundColor: colors.lightGray,        
@@ -56,10 +56,7 @@ const styles = StyleSheet.create({
         flex: 1,       
         backgroundColor: 'white', 
         flexDirection: 'column',
-        alignItems: 'center',
-        //flexWrap: 'wrap',
-        //paddingLeft: 10,
-        
+        alignItems: 'center',        
     },
     priceText:{
         flex: 1.5,
@@ -68,45 +65,49 @@ const styles = StyleSheet.create({
         paddingTop: 6, 
         paddingRight: 10
     },
-    bodyInfo: {
-        flex: 1,
-    },
     graphButton: {
         margin: 5,
-        backgroundColor: colors.gold,
-        //flexDirection: 'row',
+        backgroundColor: colors.gray,     
         borderRadius: 2,
         alignItems: 'center',
-        justifyContent:  'center',
-        //alignContent: 'center',
+        justifyContent:  'center',        
         flex: 1,
-        height:60
-        //padding: 50,
-    },
-    graphButtonText: {
-        fontSize: 20,
-        marginRight: 10,
-        color: colors.white,
-    },
+        height:60      
+    },   
     description:{
         textAlign:'justify',
         fontSize:15,
         margin:10,
     },  
+    titleSection: {
+        paddingLeft:10, 
+        fontSize:18, 
+        fontWeight:'bold',
+    },
+    infoContent: {
+        margin: 10, 
+        backgroundColor: "white", 
+        borderRadius:8,
+    },
+    tagsContent: {
+        marginBottom:50, 
+        flexDirection: 'row', 
+        flexWrap: 'wrap' 
+    },
+    backButton: {
+        backgroundColor: colors.doge, 
+        flexDirection:'column', 
+        alignContent:'center', 
+        alignItems:'center', 
+        height:40
+    },
+    textButton: {
+        color: colors.gold, 
+        fontSize:20, 
+        fontWeight:'bold', 
+        paddingTop:6 
+    },
 });
-
-// const stylePrice = (percent_change) => {
-    
-//     let color = percent_change >= 0 ? 'green' : 'red';
-    
-//     return {
-//       color: color,
-//       fontWeight: 'bold',
-//       fontSize: 20,
-//     }
-// }
-
-
 
 const valueColor = (percent_change) => {
     
@@ -125,10 +126,7 @@ const rankColor = (rankVelue) => {
     }
   }
 
-const CurrencyInfo = ({navigation}) => {
-
-    // let chartLabels = [];
-    // let chartData   = [];
+const CurrencyInfo = ({navigation}) => {  
 
     const {
         states,
@@ -158,7 +156,7 @@ const CurrencyInfo = ({navigation}) => {
 
     return (
         <SafeAreaView style={ styles.container }>           
-            <Header/>         
+            <Header navigation={navigation}/>         
             {  
                 isLoadingData || isLoadingDataLFow   ?
                 (
@@ -175,8 +173,7 @@ const CurrencyInfo = ({navigation}) => {
                         <ScrollView style={ styles.scrollView }>
                             <View style={ styles.headerInfo }>
                                 <View style={ styles.imageContainer }>
-                                    <Image 
-                                        //source={ require('../assets/no_image_available.jpg') }
+                                    <Image                                        
                                         source={ { uri: logo } }
                                         style={ styles.image }
                                     />
@@ -216,19 +213,19 @@ const CurrencyInfo = ({navigation}) => {
                                       
                                     </View>
                                 </View>                                        
-                                <Text style={{ paddingLeft:10, paddingTop:10, fontSize:18, fontWeight:'bold'  }}>Descripción</Text>
-                                <View  style={{ margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:10 }}>
+                                <Text style={ [styles.titleSection, { paddingTop:10 }] }>Descripción</Text>
+                                <View  style={[styles.infoContent , { marginBottom:10 }]}>
                                     <Text style={styles.description}>{ description }</Text>
                                 </View>   
-                                <Text style={{paddingLeft:10, fontSize:18, fontWeight:'bold'}} >Tags</Text>
-                                <View  style={{  margin: 10, backgroundColor: "white", borderRadius:8, marginBottom:50, flexDirection: 'row', flexWrap: 'wrap' }}>
+                                <Text style={ styles.titleSection } >Tags</Text>
+                                <View  style={[styles.infoContent, styles.tagsContent]}>
                                     <TagList tags={ JSON.parse(JSON.stringify(tags)) } />
                                 </View>
                             </View>                   
                         </ScrollView>
                         <View>
-                            <TouchableOpacity style={{ backgroundColor: colors.doge, flexDirection:'column', alignContent:'center', alignItems:'center', height:40 }} onPress={() => navigation.pop()}>
-                                <Text style={{ color: colors.gold, fontSize:20, fontWeight:'bold',  paddingTop:6   }}>Volver atrás</Text>
+                            <TouchableOpacity style={ styles.backButton } onPress={() => navigation.pop()}>
+                                <Text style={ styles.textButton }>Volver atrás</Text>
                             </TouchableOpacity>
                         </View>
                     </>  
