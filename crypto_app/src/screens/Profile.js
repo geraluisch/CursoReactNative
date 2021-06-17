@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/core';
 import {
@@ -62,8 +61,6 @@ const styles = StyleSheet.create({
     padding: 10
   },  
 });
-
-const cryotoAppAsyncStorageKey = 'cryptoAppProfile';
 
 const Profile = ({ userName, userMail, userPhone, userPhoto, profile }) => {
 
@@ -165,8 +162,7 @@ const Profile = ({ userName, userMail, userPhone, userPhoto, profile }) => {
 };
 
 const mapStateToProps = globalState => {
-  console.log('- LOL -',globalState.profileReducer);
-
+  
   return {
       userName: globalState.profileReducer.nombre,
       userMail: globalState.profileReducer.correo,

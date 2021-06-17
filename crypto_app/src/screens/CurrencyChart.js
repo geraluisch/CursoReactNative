@@ -97,42 +97,51 @@ const CurrencyChart = ({
             <ScrollView style={ styles.scrollView }>
                 <View style={{ padding:10 }}>
                     <Text style={ styles.titleGraph }>Gráfico Precios vs Tiempo</Text>
-                    <LineChart
-                        data={{
-                        labels: labels.reverse(),
-                        datasets: [
-                            {
-                                data: data.reverse()                              
-                            }
-                        ]
-                        }}
-                        width={Dimensions.get("window").width - 20} 
-                        height={250}
-                        yAxisLabel="$"
-                        yAxisSuffix="k"
-                        yAxisInterval={1} 
-                        chartConfig={{
-                        backgroundColor: "#e26a00",
-                        backgroundGradientFrom: 'red',//"#fb8c00",
-                        backgroundGradientTo: "#ffa726",
-                        decimalPlaces: 2, 
-                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        style: {
-                            borderRadius: 16
-                        },
-                        propsForDots: {
-                            r: "6",
-                            strokeWidth: "2",
-                            stroke: "#ffa726"
-                        }
-                        }}
-                        bezier
-                        style={{
-                        marginVertical: 8,
-                        borderRadius: 16
-                        }}
-                    />
+                    {
+
+                        data.length > 0  ?
+
+                            <LineChart
+                                data={{
+                                labels: labels.reverse(),
+                                datasets: [
+                                    {
+                                        data: data.reverse()
+                                    }
+                                ]
+                                }}
+                                width={Dimensions.get("window").width - 20} 
+                                height={250}
+                                yAxisLabel="$"
+                                yAxisSuffix="k"
+                                yAxisInterval={1} 
+                                chartConfig={{
+                                backgroundColor: "#e26a00",
+                                backgroundGradientFrom: 'red',//"#fb8c00",
+                                backgroundGradientTo: "#ffa726",
+                                decimalPlaces: 2, 
+                                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                                style: {
+                                    borderRadius: 16
+                                },
+                                propsForDots: {
+                                    r: "6",
+                                    strokeWidth: "2",
+                                    stroke: "#ffa726"
+                                }
+                                }}
+                                bezier
+                                style={{
+                                marginVertical: 8,
+                                borderRadius: 16
+                                }}
+                            />
+                        :
+                            <Text style={ styles.titleText }>DATA NO AVAILABLE</Text>
+                        
+
+                    }
                 </View>    
                 <Text style={ styles.titleText }>Precio Actual</Text>
                 <View  style={styles.infoContent}>
